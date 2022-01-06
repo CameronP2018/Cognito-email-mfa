@@ -98,8 +98,6 @@ select{
     
 </head>
 <body >
-<span style="text-align:center;"><h1>Welcome to DNAS<h1></span>
-<br>
 
 <span style="text-align:center;"><h3>Login</h3></span>
 <form id="signIn">
@@ -138,8 +136,8 @@ $(document).ready(function() {
     $('#signUp').submit(function(event) {
 		
 		var poolData = {
-            UserPoolId : 'eu-west-2_ntj0l5yAm', // your user pool id here
-            ClientId : '12p6kloito9u0edn79kni6u88g' // your app client id here
+            UserPoolId : 'your user pool id here', 
+            ClientId : ' your app client id here' 
 		};
 		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
@@ -185,8 +183,8 @@ $(document).ready(function() {
         AWSCognito.config.region = 'eu-west-2';
 		
 		var poolData = {
-            UserPoolId : 'eu-west-2_ntj0l5yAm', // your user pool id here
-            ClientId : '12p6kloito9u0edn79kni6u88g' // your app client id here
+            UserPoolId : 'your user pool id here', 
+            ClientId : ' your app client id here' 
 		};
 		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 		
