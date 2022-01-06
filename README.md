@@ -1,7 +1,5 @@
 # Cognito MFA authentication via Email
 
-##  Still a work in progress!
-
 Doing this as proof of concept for a work project. The project is very simple and doesnt have any fancy frontend frameworks to use so i will be doing this with the Amazon Cognito Identity sdk.
 
 The sign in authentication flow is: 
