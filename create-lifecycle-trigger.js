@@ -1,13 +1,11 @@
-import * as crypto from "crypto";
-import { SES } from 'aws-sdk';
-import { CognitoUserPoolTriggerHandler } from 'aws-lambda';
+const crypto = require("crypto");
+var aws = require("aws-sdk");
+var ses = new aws.SES({ region: "eu-west-2" });
 
-const ses = new SES();
-
-export const handler = CognitoUserPoolTriggerHandler = async event => {
-
-    let verificationCode= '';
+exports.handler = async(event, context, callback) => {
     
+    var verificationCode = 0;
+   
     //Only called after SRP_A and PASSWORD_VERIFIER challenges.
     if (event.request.session.length == 2) {
         const n = crypto.randomInt(0, 100000);
@@ -16,7 +14,7 @@ export const handler = CognitoUserPoolTriggerHandler = async event => {
         const minimumNumber = 0;
         const maximumNumber = 100000;
          
-        const verificationCode = Math.floor(Math.random() * maximumNumber) + minimumNumber;
+        verificationCode = Math.floor(Math.random() * maximumNumber) + minimumNumber;
          
     await sendMail(event.request.userAttributes.email, verificationCode);
     }
@@ -32,7 +30,7 @@ export const handler = CognitoUserPoolTriggerHandler = async event => {
     event.response.challengeMetadata = verificationCode;
     
     return event;
-    }
+    };
     
     async function sendMail(emailAddress, secretLoginCode) {
     const params = {
@@ -54,7 +52,7 @@ export const handler = CognitoUserPoolTriggerHandler = async event => {
                 Data: 'Your secret login code'
             }
         },
-        Source: 'insert your email here'
+        Source: 'insert your email here - make sure it is a verified email address'
     };
     await ses.sendEmail(params).promise();
 }

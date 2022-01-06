@@ -22,17 +22,23 @@ code entered is sent to verify trigger which is validated with code created in t
 
 git clone https://github.com/CameronP2018/Cognito-email-mfa.git
 
+update the login.html with your own pool id and client app id
+
 ### Create a S3 Bucket 
 
 upload Login.html, aws-cognito-sdk.min.js, amazon-cognito-identity.min.js
 
 go to S3 bucket properties and turn on static website hosting -> choose login.html as the Index document
 
+### Add a verified email 
+
+Go to amazon SES and add a verified email address
+
 ### Create the lambda triggers
 
 create a lamda trigger for each of the triggers in the repo 
 
-simply copy the code and paste it in to seperate lambda functions
+simply copy the code and paste it in to seperate lambda functions - you will need to insert your own verified email address in the create function
 
 ### Create the user pool 
 
@@ -43,3 +49,5 @@ you can change the password policy to make it easier for testing (short password
 MAKE SURE TO HAVE MFA TURNED OFF. MFA will be sent via email so we dont need it on
 
 In the triggers section add the triggers created earlier to corresponding cognito triggers i.e define, create and verify
+
+create a client app - make sure to untick the client secret!

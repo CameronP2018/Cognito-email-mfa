@@ -139,8 +139,8 @@ $(document).ready(function() {
     $('#signUp').submit(function(event) {
 		
 		var poolData = {
-            UserPoolId : 'eu-west-2_ntj0l5yAm', 
-            ClientId : '12p6kloito9u0edn79kni6u88g' 
+            UserPoolId : 'UserPoolId', 
+            ClientId : 'ClientId' 
 		};
 		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
@@ -186,8 +186,8 @@ $(document).ready(function() {
         AWSCognito.config.region = 'eu-west-2';
 		
 		var poolData = {
-            UserPoolId : 'eu-west-2_ntj0l5yAm', 
-            ClientId : '12p6kloito9u0edn79kni6u88g' 
+            UserPoolId : 'UserPoolId', 
+            ClientId : 'ClientId' 
 		};
 		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 		
