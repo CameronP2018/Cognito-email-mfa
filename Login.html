@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Demo DNAS</title>
+
+<style type="text/css">
+.form-style-1 {
+	margin:10px auto;
+	max-width: 400px;
+	padding: 20px 12px 10px 20px;
+	font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.form-style-1 li {
+	padding: 0;
+	display: block;
+	list-style: none;
+	margin: 10px 0 0 0;
+}
+.form-style-1 label{
+	margin:0 0 3px 0;
+	padding:0px;
+	display:block;
+	font-weight: bold;
+}
+.form-style-1 input[type=text], 
+.form-style-1 input[type=date],
+.form-style-1 input[type=datetime],
+.form-style-1 input[type=number],
+.form-style-1 input[type=search],
+.form-style-1 input[type=time],
+.form-style-1 input[type=url],
+.form-style-1 input[type=email],
+textarea, 
+select{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border:1px solid #BEBEBE;
+	padding: 7px;
+	margin:0px;
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;	
+}
+.form-style-1 input[type=text]:focus, 
+.form-style-1 input[type=date]:focus,
+.form-style-1 input[type=datetime]:focus,
+.form-style-1 input[type=number]:focus,
+.form-style-1 input[type=search]:focus,
+.form-style-1 input[type=time]:focus,
+.form-style-1 input[type=url]:focus,
+.form-style-1 input[type=email]:focus,
+.form-style-1 textarea:focus, 
+.form-style-1 select:focus{
+	-moz-box-shadow: 0 0 8px #88D5E9;
+	-webkit-box-shadow: 0 0 8px #88D5E9;
+	box-shadow: 0 0 8px #88D5E9;
+	border: 1px solid #88D5E9;
+}
+.form-style-1 .field-divided{
+	width: 49%;
+}
+
+.form-style-1 .field-long{
+	width: 100%;
+}
+.form-style-1 .field-select{
+	width: 100%;
+}
+.form-style-1 .field-textarea{
+	height: 100px;
+}
+.form-style-1 input[type=submit], .form-style-1 input[type=button]{
+	background: #4B99AD;
+	padding: 8px 15px 8px 15px;
+	border: none;
+	color: #fff;
+}
+.form-style-1 input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+	background: #4691A4;
+	box-shadow:none;
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+}
+.form-style-1 .required{
+	color:red;
+}
+</style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	
+    <script src="aws-cognito-sdk.min.js"></script>
+    <script src="amazon-cognito-identity.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.752.0.min.js"></script>
+    
+</head>
+<body >
+<span style="text-align:center;"><h1>Welcome to DNAS<h1></span>
+<br>
+
+<span style="text-align:center;"><h3>Login</h3></span>
+<form id="signIn">
+<ul class="form-style-1">
+    <li><label>Username <span class="required">*</span></label><input type="text" name="username" class="field-divided" placeholder="UID" /></li>
+    <li><label>Password <span class="required">*</span></label><input type="password" name="password" class="field-divided" placeholder="Password" /></li>    
+    <li>
+        <input type="submit" value="Submit" />
+    </li>
+</ul>
+</form>
+
+<div id="resultsSignIn" class="form-style-1"></div>
+
+
+<span style="text-align:center;"><h3>Sign Up</h3></span>
+<form id="signUp">
+<ul class="form-style-1">
+    <li><label>Username <span class="required">*</span></label><input type="text" name="usernameSignUp" class="field-divided" placeholder="UID" /></li>
+    <li><label>Password <span class="required">*</span></label><input type="password" name="passwordSignUp" class="field-divided" placeholder="Password" /></li>  
+    <li><label>Email <span class="required">*</span></label><input type="email" name="email" class="field-divided" placeholder="john@example.com" /></li>  
+	<li><label>Phone number <span class="required">*</span></label><input type="tel" name="telephone" class="field-divided" placeholder="+4412345678" /></li>  	
+    <li>
+        <input type="submit" value="Submit" />
+    </li>
+</ul>
+</form>
+
+<div id="resultsSignUp" class="form-style-1"></div>
+</body>
+</html>
+<script type="text/javascript">
+//var dataResult;
+$(document).ready(function() {
+
+    $('#signUp').submit(function(event) {
+		
+		var poolData = {
+            UserPoolId : 'eu-west-2_ntj0l5yAm', // your user pool id here
+            ClientId : '12p6kloito9u0edn79kni6u88g' // your app client id here
+		};
+		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+		var attributeList = [];
+
+		var dataEmail = {
+			Name: 'email',
+			Value: $('input[name=email]').val(),
+		};
+
+		var dataPhoneNumber = {
+			Name: 'phone_number',
+			Value: $('input[name=telephone]').val(),
+		};
+		
+		var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+		var attributePhoneNumber = new AmazonCognitoIdentity.CognitoUserAttribute(dataPhoneNumber);
+
+		attributeList.push(attributeEmail);
+		attributeList.push(attributePhoneNumber);
+		
+		console.log(attributeList)
+
+		userPool.signUp($('input[name=usernameSignUp]').val(), $('input[name=passwordSignUp]').val(), attributeList, null, function(err, result) {
+			if (err) {
+				alert(err.message || JSON.stringify(err));
+				return;
+			}
+			var resultStr = 'Sign Up Successful';
+			console.log(resultStr);
+			$('#resultsSignUp').html(resultStr);
+			var cognitoUser = result.user;
+			console.log('user name is ' + cognitoUser.getUsername());
+		});
+	
+		
+		//user is confirmed through lamda trigger pre sign up - this auto verifies the email and phone number automatically
+	});
+
+
+	$('#signIn').submit(function(event) {
+        //-------------------user pool
+        AWSCognito.config.region = 'eu-west-2';
+		
+		var poolData = {
+            UserPoolId : 'eu-west-2_ntj0l5yAm', // your user pool id here
+            ClientId : '12p6kloito9u0edn79kni6u88g' // your app client id here
+		};
+		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+		
+		var userData = {
+			Username: $('input[name=username]').val(),
+			Pool: userPool,
+		};
+		var authenticationData = {
+            Username : $('input[name=username]').val(),
+            Password : $('input[name=password]').val(),
+        };
+		var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+
+		var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
+
+        cognitoUser.setAuthenticationFlowType('CUSTOM_AUTH');
+		
+        cognitoUser.authenticateUser(authenticationDetails, {
+			onSuccess: function(result) {
+                console.log('success');
+				var resultStr = 'Login Successful';
+				console.log(resultStr);
+				$('#resultsSignIn').html(resultStr);
+			},
+			onFailure: function(err) {
+                alert(err);
+			},
+			customChallenge: function(challengeParameters) {
+				// User authentication depends on challenge response
+				var verificationCode = prompt('Please input OTP code' ,'');
+				cognitoUser.sendCustomChallengeAnswer(verificationCode, this);
+			},
+        });
+		
+		return false;
+	});
+});
+</script>
