@@ -54,7 +54,7 @@ export const handler = CognitoUserPoolTriggerHandler = async event => {
                 Data: 'Your secret login code'
             }
         },
-        Source: 'cameron.purves@hotmail.co.uk'
+        Source: 'insert your email here'
     };
     await ses.sendEmail(params).promise();
 }
