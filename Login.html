@@ -98,6 +98,7 @@ select{
     
 </head>
 <body >
+<span style="text-align:center;">
 
 <span style="text-align:center;"><h3>Login</h3></span>
 <form id="signIn">
@@ -127,6 +128,8 @@ select{
 </form>
 
 <div id="resultsSignUp" class="form-style-1"></div>
+
+</span>
 </body>
 </html>
 <script type="text/javascript">
@@ -136,8 +139,8 @@ $(document).ready(function() {
     $('#signUp').submit(function(event) {
 		
 		var poolData = {
-            UserPoolId : 'your user pool id here', 
-            ClientId : ' your app client id here' 
+            UserPoolId : 'eu-west-2_ntj0l5yAm', 
+            ClientId : '12p6kloito9u0edn79kni6u88g' 
 		};
 		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
@@ -183,8 +186,8 @@ $(document).ready(function() {
         AWSCognito.config.region = 'eu-west-2';
 		
 		var poolData = {
-            UserPoolId : 'your user pool id here', 
-            ClientId : ' your app client id here' 
+            UserPoolId : 'eu-west-2_ntj0l5yAm', 
+            ClientId : '12p6kloito9u0edn79kni6u88g' 
 		};
 		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 		
@@ -196,10 +199,10 @@ $(document).ready(function() {
             Username : $('input[name=username]').val(),
             Password : $('input[name=password]').val(),
         };
-		var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
 
-		var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
-
+        var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+        var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+		
         cognitoUser.setAuthenticationFlowType('CUSTOM_AUTH');
 		
         cognitoUser.authenticateUser(authenticationDetails, {
