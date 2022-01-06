@@ -4,7 +4,7 @@
 
 Doing this as proof of concept for a work project. The project is very simple and doesnt have any fancy frontend frameworks to use so i will be doing this with the Amazon Cognito Identity sdk.
 
-The authentication flow is: 
+The sign in authentication flow is: 
 
 user enters username and password 
 ->
@@ -48,6 +48,6 @@ you can change the password policy to make it easier for testing (short password
 
 MAKE SURE TO HAVE MFA TURNED OFF. MFA will be sent via email so we dont need it on
 
-In the triggers section add the triggers created earlier to corresponding cognito triggers i.e define, create and verify
+In the triggers section add the triggers created earlier to corresponding cognito triggers i.e define, create and verify - the auto-verify lambda should be put in the pre-sign up trigger (this auto confirms the users account on sign up)
 
 create a client app - make sure to untick the client secret!
