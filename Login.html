@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Demo DNAS</title>
+<title>Cognito Email MFA Demo</title>
 
 <style type="text/css">
 .form-style-1 {
@@ -182,8 +182,8 @@ $(document).ready(function() {
 
 
 	$('#signIn').submit(function(event) {
-        //-------------------user pool
-        AWSCognito.config.region = 'eu-west-2';
+		
+        AWSCognito.config.region = 'your region';
 		
 		var poolData = {
             UserPoolId : 'UserPoolId', 
