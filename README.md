@@ -2,6 +2,8 @@
 
 Doing this as proof of concept for a work project. The project is very simple and doesnt have any fancy frontend frameworks to use so i will be doing this with the Amazon Cognito Identity sdk.
 
+Found that there weren't any examples of setting up email MFA with the SDK whilst researching so hopefully this helps anyone who comes across it! 
+
 The sign in authentication flow is: 
 
 user enters username and password 
